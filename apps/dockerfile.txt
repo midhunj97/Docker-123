@@ -1,0 +1,27 @@
+FROM ubuntu:20.04
+
+RUN mkdir -p /app
+RUN chmod 777 /app
+VOLUME /app
+WORKDIR /app
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+    curl \
+    wget \
+    awscli \
+    && rm -rf /var/lib/apt/lists/*
+    
+
+RUN wget https://fastdl.mongodb.org/tools/db/mongodb-database-tools-debian10-x86_64-100.7.0.deb --no-check-certificate && \
+    apt install ./mongodb-database-tools-*.deb && \
+    rm -f mongodb-database-tools-*.deb
+
+WORKDIR /src
+COPY . .
+
+RUN sed -i 's/\r$//' /src/create-mongodb-dump.sh
+RUN chmod 755 /src/create-mongodb-dump.sh
+
+
+CMD [ "bash", "./create-mongodb-dump.sh" ]

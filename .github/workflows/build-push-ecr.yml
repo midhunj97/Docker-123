@@ -28,9 +28,9 @@ jobs:
       - name: Build and push Docker image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: my-ecr-repo-name   # replace with your repo name
+          ECR_REPOSITORY: myecr   # replace with your repo name
           IMAGE_TAG: ${{ github.run_number }}  # unique tag per run
-        working-directory: ./path/to/dockerfile  # replace with your Dockerfile location
+        working-directory: ./apps/Dockerfile  # replace with your Dockerfile location
         run: |
           # Build Docker image
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .

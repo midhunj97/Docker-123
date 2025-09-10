@@ -1,37 +1,27 @@
-# Base image
 FROM ubuntu:20.04
 
-# Set non-interactive frontend to avoid tzdata prompts
-ENV DEBIAN_FRONTEND=noninteractive
+RUN mkdir -p /app
+RUN chmod 777 /app
+VOLUME /app
+WORKDIR /app
 
-# Create app directory with proper permissions
-RUN mkdir -p /app /src && chmod 777 /app
-
-# Define mount point
-VOLUME ["/app"]
-
-# Install dependencies
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
     curl \
     wget \
     awscli \
-    ca-certificates \
-    gnupg \
     && rm -rf /var/lib/apt/lists/*
+    
 
-# Install MongoDB Database Tools
 RUN wget https://fastdl.mongodb.org/tools/db/mongodb-database-tools-debian10-x86_64-100.7.0.deb --no-check-certificate && \
-    apt install -y ./mongodb-database-tools-*.deb && \
+    apt install ./mongodb-database-tools-*.deb && \
     rm -f mongodb-database-tools-*.deb
 
-# Copy script into container
 WORKDIR /src
-COPY create-mongodb-dump.sh /src/create-mongodb-dump.sh
+COPY . .
 
-# Normalize line endings (in case uploaded from Windows)
-RUN sed -i 's/\r$//' /src/create-mongodb-dump.sh && \
-    chmod +x /src/create-mongodb-dump.sh
+RUN sed -i 's/\r$//' /src/create-mongodb-dump.sh
+RUN chmod 755 /src/create-mongodb-dump.sh
 
-# Run the script by default
-CMD ["bash", "/src/create-mongodb-dump.sh"]
+
+CMD [ "bash", "./create-mongodb-dump.sh" ]

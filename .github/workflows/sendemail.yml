@@ -1,28 +1,33 @@
-name: Send Outlook Email
+name: Send Email via SES
 
 on:
-  workflow_dispatch: # trigger manually
+  workflow_dispatch:
 
 jobs:
-  send-mail:
+  send_email:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Send email using Outlook SMTP
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: smtp.office365.com
-          server_port: 587
-          username: midhunj97@outlook.com
-          password: qmyjgrdmzzlblbcw
-          subject: "GitHub Actions Notification"
-          to: "midhunj97@gmail.com"
-          from: "midhunj97@outlook.com"
-          body: |
-            Hello,
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-            This is an automated email from GitHub Actions running on ubuntu-latest.
+    - name: Install AWS CLI
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y awscli
 
-            ✅ Workflow completed successfully.
-
-            Regards,  
-            Your GitHub Workflow
+    - name: Send Email using AWS SES
+      env:
+        AWS_ACCESS_KEY_ID: AKIAU5LH5UQSTDS7TGPK
+        AWS_SECRET_ACCESS_KEY: miMMKK3ECk1yKViwlcEWKgDyEpet04SQtccr4yas
+        AWS_REGION: us-east-2
+      run: |
+        aws ses send-email \
+          --from "midhunj97@outlook.com" \
+          --destination "ToAddresses=cwmidhun@gmail.com" \
+          --message '{
+            "Subject": {"Data": "GitHub Actions Email Test"},
+            "Body": {
+              "Text": {"Data": "Hello! This email was sent via Amazon SES from GitHub Actions."}
+            }
+          }'

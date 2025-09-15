@@ -19,8 +19,8 @@ jobs:
 
     - name: Send Email using AWS SES
       env:
-        AWS_ACCESS_KEY_ID: AKIAU5LH5UQSTDS7TGPK
-        AWS_SECRET_ACCESS_KEY: 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
+        AWS_ACCESS_KEY_ID: put
+        AWS_SECRET_ACCESS_KEY: put 
         AWS_REGION: us-east-2
       run: |
         aws ses send-email \

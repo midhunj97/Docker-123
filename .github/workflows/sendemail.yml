@@ -16,7 +16,7 @@ jobs:
           password: "qmyjgrdmzzlblbcw"
           subject: "GitHub Actions Notification"
           to: "midhunj97@gmail.com"
-          from: "midhunj97@gmail.com"
+          from: "midhunj97@outlook.com"
           body: |
             Hello,
 

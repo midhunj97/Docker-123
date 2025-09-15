@@ -13,7 +13,7 @@ jobs:
           server_address: smtp.office365.com
           server_port: 587
           username: "midhunj97@outlook.com"
-          password: "JoseKutty@606"
+          password: "qmyjgrdmzzlblbcw"
           subject: "GitHub Actions Notification"
           to: "midhunj97@gmail.com"
           from: "midhunj97@gmail.com"

@@ -1,0 +1,28 @@
+name: Send Outlook Email
+
+on:
+  workflow_dispatch: # trigger manually
+
+jobs:
+  send-mail:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send email using Outlook SMTP
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.office365.com
+          server_port: 587
+          username: midhunj97@outlook.com
+          password: JoseKutty@606
+          subject: "GitHub Actions Notification"
+          to: "recipient@example.com"
+          from: "GitHub Actions <${{ secrets.OUTLOOK_USERNAME }}>"
+          body: |
+            Hello,
+
+            This is an automated email from GitHub Actions running on ubuntu-latest.
+
+            ✅ Workflow completed successfully.
+
+            Regards,  
+            Your GitHub Workflow

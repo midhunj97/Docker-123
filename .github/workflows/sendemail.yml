@@ -12,11 +12,11 @@ jobs:
         with:
           server_address: smtp.office365.com
           server_port: 587
-          username: midhunj97@outlook.com
-          password: JoseKutty@606
+          username: "midhunj97@outlook.com"
+          password: "JoseKutty@606"
           subject: "GitHub Actions Notification"
-          to: "recipient@example.com"
-          from: "GitHub Actions <${{ secrets.OUTLOOK_USERNAME }}>"
+          to: "midhunj97@gmail.com"
+          from: "midhunj97@gmail.com"
           body: |
             Hello,
 
